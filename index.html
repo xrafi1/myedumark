@@ -3,764 +3,1192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduMark - School Result Portal</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>EduMark - Private School Result Portal</title>
+    <meta name="description" content="EduMark Private School Result Portal - Check your academic results online">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #d10000;
-            --secondary-color: #ffffff;
-            --accent-color: #ff4d4d;
-            --text-color: #333333;
-            --light-gray: #f5f5f5;
-        }
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
         }
-        
+
+        :root {
+            --primary-red: #dc2626;
+            --secondary-red: #ef4444;
+            --light-red: #fef2f2;
+            --dark-red: #991b1b;
+            --pure-white: #ffffff;
+            --light-gray: #f8fafc;
+            --text-gray: #64748b;
+            --dark-gray: #334155;
+        }
+
         body {
-            background-color: var(--secondary-color);
-            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
             line-height: 1.6;
+            color: var(--dark-gray);
+            background: var(--pure-white);
             overflow-x: hidden;
         }
-        
+
         /* Header Styles */
-        header {
-            background-color: var(--primary-color);
-            color: var(--secondary-color);
-            padding: 1rem 0;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            position: relative;
-            z-index: 100;
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(220, 38, 38, 0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
         }
-        
-        .header-container {
+
+        .header.scrolled {
+            box-shadow: 0 4px 20px rgba(220, 38, 38, 0.1);
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
         }
-        
+
         .logo {
-            display: flex;
-            align-items: center;
-            animation: fadeInDown 1s ease;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-red);
+            text-decoration: none;
+            animation: fadeInLeft 1s ease;
         }
-        
-        .logo img {
-            height: 50px;
-            margin-right: 10px;
-        }
-        
-        .logo h1 {
-            font-size: 1.8rem;
-            font-weight: 700;
-        }
-        
-        .logo span {
-            color: var(--secondary-color);
-        }
-        
-        nav ul {
+
+        .nav-links {
             display: flex;
             list-style: none;
+            gap: 2rem;
+            animation: fadeInRight 1s ease;
         }
-        
-        nav ul li {
-            margin-left: 20px;
-        }
-        
-        nav ul li a {
-            color: var(--secondary-color);
+
+        .nav-links a {
             text-decoration: none;
+            color: var(--dark-gray);
             font-weight: 500;
             transition: all 0.3s ease;
-            padding: 5px 10px;
-            border-radius: 4px;
+            position: relative;
         }
-        
-        nav ul li a:hover {
-            background-color: rgba(255, 255, 255, 0.2);
+
+        .nav-links a:hover {
+            color: var(--primary-red);
+            transform: translateY(-2px);
         }
-        
-        .mobile-menu-btn {
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-red);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-toggle {
             display: none;
             background: none;
             border: none;
-            color: var(--secondary-color);
             font-size: 1.5rem;
+            color: var(--primary-red);
             cursor: pointer;
         }
-        
+
         /* Hero Section */
         .hero {
-            background: linear-gradient(rgba(209, 0, 0, 0.8), rgba(209, 0, 0, 0.9)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
-            background-size: cover;
-            background-position: center;
-            color: var(--secondary-color);
-            padding: 5rem 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--pure-white) 0%, var(--light-red) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-align: center;
+            padding: 2rem;
             position: relative;
+            overflow: hidden;
         }
-        
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(220, 38, 38, 0.05) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
         .hero-content {
             max-width: 800px;
-            margin: 0 auto;
-            padding: 0 20px;
-            animation: fadeInUp 1s ease;
+            z-index: 2;
+            position: relative;
         }
-        
-        .hero h2 {
-            font-size: 2.5rem;
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            color: var(--primary-red);
             margin-bottom: 1rem;
-            animation: fadeIn 1.5s ease;
+            animation: fadeInUp 1s ease 0.2s both;
         }
-        
-        .hero p {
-            font-size: 1.2rem;
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            color: var(--text-gray);
             margin-bottom: 2rem;
-            animation: fadeIn 2s ease;
+            animation: fadeInUp 1s ease 0.4s both;
         }
-        
-        .btn {
+
+        .hero .description {
+            font-size: 1.1rem;
+            color: var(--text-gray);
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        .cta-button {
             display: inline-block;
-            background-color: var(--secondary-color);
-            color: var(--primary-color);
-            padding: 12px 30px;
+            background: var(--primary-red);
+            color: var(--pure-white);
+            padding: 1rem 2.5rem;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
+            font-size: 1.1rem;
             transition: all 0.3s ease;
-            border: 2px solid var(--secondary-color);
-            animation: pulse 2s infinite;
+            animation: fadeInUp 1s ease 0.8s both;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
         }
-        
-        .btn:hover {
-            background-color: transparent;
-            color: var(--secondary-color);
+
+        .cta-button:hover {
+            background: var(--dark-red);
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 25px rgba(220, 38, 38, 0.4);
         }
-        
-        /* Result Section */
-        .result-section {
-            padding: 5rem 0;
-            background-color: var(--secondary-color);
+
+        /* Features Section */
+        .features {
+            padding: 5rem 2rem;
+            background: var(--pure-white);
         }
-        
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
         .section-title {
             text-align: center;
-            margin-bottom: 3rem;
-            position: relative;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-red);
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
         }
-        
-        .section-title h2 {
-            font-size: 2.2rem;
-            color: var(--primary-color);
-            display: inline-block;
-            position: relative;
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            margin-bottom: 4rem;
+            animation: fadeInUp 1s ease 0.2s both;
         }
-        
-        .section-title h2::after {
-            content: '';
-            position: absolute;
-            width: 50px;
-            height: 3px;
-            background-color: var(--primary-color);
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
         }
-        
-        .result-container {
+
+        .feature-card {
+            background: var(--pure-white);
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(220, 38, 38, 0.1);
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(220, 38, 38, 0.15);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--light-red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: var(--primary-red);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--dark-gray);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+
+        /* About Section */
+        .about {
+            padding: 5rem 2rem;
+            background: var(--light-gray);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-red);
+            margin-bottom: 1.5rem;
+            animation: fadeInLeft 1s ease;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            color: var(--text-gray);
+            margin-bottom: 1.5rem;
+            animation: fadeInLeft 1s ease 0.2s both;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            animation: fadeInUp 1s ease;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary-red);
+            display: block;
+        }
+
+        .stat-label {
+            color: var(--text-gray);
+            font-weight: 500;
+        }
+
+        .about-image {
+            animation: fadeInRight 1s ease;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(220, 38, 38, 0.1);
+        }
+
+        /* Result Portal Section */
+        .result-portal {
+            padding: 5rem 2rem;
+            background: var(--pure-white);
+            text-align: center;
+        }
+
+        .portal-container {
             max-width: 800px;
             margin: 0 auto;
-            background-color: var(--light-gray);
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            animation: slideInUp 1s ease;
         }
-        
-        .result-form {
+
+        .portal-card {
+            background: var(--pure-white);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(220, 38, 38, 0.1);
+            border: 2px solid var(--light-red);
+            animation: fadeInUp 1s ease;
+        }
+
+        .portal-card h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-red);
+            margin-bottom: 1rem;
+        }
+
+        .portal-card p {
+            font-size: 1.1rem;
+            color: var(--text-gray);
+            margin-bottom: 2rem;
+        }
+
+        .result-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-red), var(--secondary-red));
+            color: var(--pure-white);
+            padding: 1.2rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(220, 38, 38, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .result-button:hover::before {
+            left: 100%;
+        }
+
+        .result-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(220, 38, 38, 0.4);
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 5rem 2rem;
+            background: var(--light-red);
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .contact-info h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-red);
+            margin-bottom: 2rem;
+            animation: fadeInLeft 1s ease;
+        }
+
+        .contact-item {
             display: flex;
-            flex-direction: column;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            animation: fadeInLeft 1s ease;
         }
-        
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: var(--pure-white);
+            font-size: 1.2rem;
+        }
+
+        .contact-details h3 {
+            font-weight: 600;
+            color: var(--dark-gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-details p {
+            color: var(--text-gray);
+        }
+
+        .contact-form {
+            background: var(--pure-white);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(220, 38, 38, 0.1);
+            animation: fadeInRight 1s ease;
+        }
+
         .form-group {
             margin-bottom: 1.5rem;
         }
-        
+
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 500;
-            color: var(--primary-color);
+            color: var(--dark-gray);
         }
-        
-        .form-group input, .form-group select {
+
+        .form-group input,
+        .form-group textarea {
             width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            padding: 1rem;
+            border: 2px solid var(--light-red);
+            border-radius: 10px;
             font-size: 1rem;
             transition: all 0.3s ease;
         }
-        
-        .form-group input:focus, .form-group select:focus {
-            border-color: var(--primary-color);
+
+        .form-group input:focus,
+        .form-group textarea:focus {
             outline: none;
-            box-shadow: 0 0 0 3px rgba(209, 0, 0, 0.1);
+            border-color: var(--primary-red);
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
         }
-        
-        .submit-btn {
-            background-color: var(--primary-color);
-            color: var(--secondary-color);
+
+        .submit-button {
+            width: 100%;
+            background: var(--primary-red);
+            color: var(--pure-white);
+            padding: 1rem;
             border: none;
-            padding: 12px 30px;
-            border-radius: 50px;
-            font-size: 1rem;
+            border-radius: 10px;
+            font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-top: 1rem;
         }
-        
-        .submit-btn:hover {
-            background-color: var(--accent-color);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(209, 0, 0, 0.2);
+
+        .submit-button:hover {
+            background: var(--dark-red);
+            transform: translateY(-2px);
         }
-        
-        /* Features Section */
-        .features {
-            padding: 5rem 0;
-            background-color: var(--light-gray);
-        }
-        
-        .features-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-        
-        .feature-card {
-            background-color: var(--secondary-color);
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            text-align: center;
-            transition: all 0.3s ease;
-            animation: fadeIn 1s ease;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .feature-icon {
-            font-size: 3rem;
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-        }
-        
-        .feature-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--primary-color);
-        }
-        
+
         /* Footer */
-        footer {
-            background-color: var(--primary-color);
-            color: var(--secondary-color);
-            padding: 3rem 0 1rem;
+        .footer {
+            background: var(--dark-gray);
+            color: var(--pure-white);
+            text-align: center;
+            padding: 3rem 2rem 2rem;
         }
-        
-        .footer-container {
+
+        .footer-content {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
         }
-        
+
         .footer-logo {
-            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-red);
+            margin-bottom: 1rem;
         }
-        
-        .footer-logo h2 {
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
+
+        .footer p {
+            color: var(--text-gray);
+            margin-bottom: 2rem;
         }
-        
-        .footer-logo p {
-            opacity: 0.8;
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
         }
-        
-        .footer-links h3, .footer-contact h3 {
-            font-size: 1.3rem;
-            margin-bottom: 1.5rem;
-            position: relative;
-        }
-        
-        .footer-links h3::after, .footer-contact h3::after {
-            content: '';
-            position: absolute;
-            width: 40px;
-            height: 2px;
-            background-color: var(--secondary-color);
-            bottom: -8px;
-            left: 0;
-        }
-        
-        .footer-links ul {
-            list-style: none;
-        }
-        
-        .footer-links ul li {
-            margin-bottom: 0.8rem;
-        }
-        
-        .footer-links ul li a {
-            color: var(--secondary-color);
+
+        .footer-links a {
+            color: var(--pure-white);
             text-decoration: none;
-            transition: all 0.3s ease;
-            opacity: 0.8;
+            transition: color 0.3s ease;
         }
-        
-        .footer-links ul li a:hover {
-            opacity: 1;
-            padding-left: 5px;
+
+        .footer-links a:hover {
+            color: var(--primary-red);
         }
-        
-        .contact-info {
-            margin-bottom: 1.5rem;
+
+        .copyright {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
+            color: var(--text-gray);
         }
-        
-        .contact-info p {
-            margin-bottom: 0.8rem;
+
+        /* Result Portal Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
             display: flex;
-            align-items: center;
-            opacity: 0.8;
-        }
-        
-        .contact-info i {
-            margin-right: 10px;
-            font-size: 1.2rem;
-        }
-        
-        .social-links {
-            display: flex;
-            gap: 1rem;
-        }
-        
-        .social-links a {
-            display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            color: var(--secondary-color);
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
         }
-        
-        .social-links a:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-3px);
+
+        .modal-content {
+            background: var(--pure-white);
+            width: 95%;
+            height: 95%;
+            max-width: 1200px;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            animation: scaleIn 0.3s ease;
         }
-        
-        .copyright {
-            text-align: center;
-            padding-top: 2rem;
-            margin-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            opacity: 0.8;
+
+        .modal-header {
+            background: var(--primary-red);
+            color: var(--pure-white);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .close-button {
+            background: none;
+            border: none;
+            color: var(--pure-white);
+            font-size: 2rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .close-button:hover {
+            transform: rotate(90deg);
+        }
+
+        .modal-iframe {
+            width: 100%;
+            height: calc(100% - 80px);
+            border: none;
+        }
+
         /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
-        
+
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(30px);
             }
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
-        
-        @keyframes fadeInDown {
+
+        @keyframes fadeInLeft {
             from {
                 opacity: 0;
-                transform: translateY(-20px);
+                transform: translateX(-30px);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateX(0);
             }
         }
-        
-        @keyframes slideInUp {
+
+        @keyframes fadeInRight {
             from {
                 opacity: 0;
-                transform: translateY(50px);
+                transform: translateX(30px);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateX(0);
             }
         }
-        
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
         @keyframes pulse {
-            0% {
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
-            }
-            70% {
-                transform: scale(1.05);
-                box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
-            }
-            100% {
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
-            }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
-        
-        /* Responsive Styles */
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .header-container {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            nav {
-                margin-top: 1rem;
+            .nav-links {
                 display: none;
-                width: 100%;
-            }
-            
-            nav.active {
-                display: block;
-            }
-            
-            nav ul {
-                flex-direction: column;
-            }
-            
-            nav ul li {
-                margin: 0.5rem 0;
-            }
-            
-            .mobile-menu-btn {
-                display: block;
                 position: absolute;
-                top: 20px;
-                right: 20px;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--pure-white);
+                flex-direction: column;
+                padding: 2rem;
+                box-shadow: 0 4px 20px rgba(220, 38, 38, 0.1);
             }
-            
-            .hero h2 {
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
                 font-size: 2rem;
             }
-            
-            .hero p {
+
+            .about-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .about-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav {
+                padding: 1rem;
+            }
+
+            .hero,
+            .features,
+            .about,
+            .result-portal,
+            .contact {
+                padding: 3rem 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .cta-button,
+            .result-button {
+                padding: 1rem 2rem;
                 font-size: 1rem;
             }
-            
-            .section-title h2 {
-                font-size: 1.8rem;
-            }
-            
-            .result-container {
+
+            .feature-card,
+            .portal-card,
+            .contact-form {
                 padding: 1.5rem;
             }
         }
-        
-        @media (max-width: 480px) {
-            .logo h1 {
-                font-size: 1.5rem;
-            }
-            
-            .hero {
-                padding: 3rem 0;
-            }
-            
-            .hero h2 {
-                font-size: 1.8rem;
-            }
-            
-            .btn {
-                padding: 10px 20px;
-            }
-            
-            .features-container {
-                grid-template-columns: 1fr;
-            }
+
+        /* Scroll animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
 <body>
     <!-- Header -->
-    <header>
-        <div class="header-container">
-            <div class="logo">
-                <i class="fas fa-graduation-cap" style="font-size: 2.5rem; margin-right: 10px; color: white;"></i>
-                <h1><span>Edu</span>Mark</h1>
-            </div>
-            <button class="mobile-menu-btn" id="mobileMenuBtn">
-                <i class="fas fa-bars"></i>
-            </button>
-            <nav id="mainNav">
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#results">Results</a></li>
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
+    <header class="header" id="header">
+        <nav class="nav">
+            <a href="#" class="logo">EduMark</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#results">Results</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">☰</button>
+        </nav>
     </header>
 
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="hero-content">
-            <h2>Welcome to EduMark Result Portal</h2>
-            <p>Check your academic results anytime, anywhere with our secure and easy-to-use platform.</p>
-            <a href="#results" class="btn">Check Results Now</a>
-        </div>
-    </section>
-
-    <!-- Result Section -->
-    <section class="result-section" id="results">
-        <div class="section-title">
-            <h2>Check Your Result</h2>
-        </div>
-        <div class="result-container">
-            <form class="result-form" id="resultForm">
-                <div class="form-group">
-                    <label for="examType">Exam Type</label>
-                    <select id="examType" required>
-                        <option value="">Select Exam Type</option>
-                        <option value="quarterly">Quarterly Examination</option>
-                        <option value="half-yearly">Half Yearly Examination</option>
-                        <option value="annual">Annual Examination</option>
-                        <option value="unit-test">Unit Test</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="class">Class</label>
-                    <select id="class" required>
-                        <option value="">Select Class</option>
-                        <option value="1">Class 1</option>
-                        <option value="2">Class 2</option>
-                        <option value="3">Class 3</option>
-                        <option value="4">Class 4</option>
-                        <option value="5">Class 5</option>
-                        <option value="6">Class 6</option>
-                        <option value="7">Class 7</option>
-                        <option value="8">Class 8</option>
-                        <option value="9">Class 9</option>
-                        <option value="10">Class 10</option>
-                        <option value="11">Class 11</option>
-                        <option value="12">Class 12</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="rollNumber">Roll Number</label>
-                    <input type="text" id="rollNumber" placeholder="Enter your roll number" required>
-                </div>
-                <button type="submit" class="submit-btn">Get Result</button>
-            </form>
+            <h1>EduMark</h1>
+            <p class="subtitle">Private School Result Portal</p>
+            <p class="description">Access your academic results instantly with our secure and user-friendly online portal. Check your grades, download certificates, and track your academic progress with ease.</p>
+            <a href="#results" class="cta-button pulse">Check Results Now</a>
         </div>
     </section>
 
     <!-- Features Section -->
     <section class="features" id="features">
-        <div class="section-title">
-            <h2>Our Features</h2>
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">Our Features</h2>
+            <p class="section-subtitle animate-on-scroll">Comprehensive facilities for students and parents</p>
+            
+            <div class="features-grid">
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">📊</div>
+                    <h3>Instant Results</h3>
+                    <p>Get your exam results immediately after they are published. No more waiting in long queues or delays.</p>
+                </div>
+                
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Secure Access</h3>
+                    <p>Your academic data is protected with advanced security measures and encrypted connections.</p>
+                </div>
+                
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">📱</div>
+                    <h3>Mobile Friendly</h3>
+                    <p>Access your results from any device - desktop, tablet, or smartphone with responsive design.</p>
+                </div>
+                
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">📈</div>
+                    <h3>Progress Tracking</h3>
+                    <p>Monitor your academic progress over time with detailed analytics and performance insights.</p>
+                </div>
+                
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">📄</div>
+                    <h3>Digital Certificates</h3>
+                    <p>Download and print your certificates and mark sheets directly from the portal.</p>
+                </div>
+                
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">🎓</div>
+                    <h3>Academic Records</h3>
+                    <p>Complete academic history and records available at your fingertips for future reference.</p>
+                </div>
+            </div>
         </div>
-        <div class="features-container">
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-mobile-alt"></i>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2 class="animate-on-scroll">About EduMark</h2>
+                    <p class="animate-on-scroll">EduMark is a leading private educational institution committed to providing quality education and comprehensive academic services. Our result portal represents our dedication to transparency, accessibility, and student convenience.</p>
+                    <p class="animate-on-scroll">With years of experience in education and technology, we have created a seamless platform that bridges the gap between traditional education and modern digital solutions.</p>
+                    
+                    <div class="about-stats">
+                        <div class="stat-item animate-on-scroll">
+                            <span class="stat-number">5000+</span>
+                            <span class="stat-label">Students</span>
+                        </div>
+                        <div class="stat-item animate-on-scroll">
+                            <span class="stat-number">15+</span>
+                            <span class="stat-label">Years Experience</span>
+                        </div>
+                        <div class="stat-item animate-on-scroll">
+                            <span class="stat-number">98%</span>
+                            <span class="stat-label">Success Rate</span>
+                        </div>
+                        <div class="stat-item animate-on-scroll">
+                            <span class="stat-number">24/7</span>
+                            <span class="stat-label">Support</span>
+                        </div>
+                    </div>
                 </div>
-                <h3>Mobile Friendly</h3>
-                <p>Access your results from any device, whether it's a smartphone, tablet, or computer.</p>
+                
+                <div class="about-image animate-on-scroll">
+                    <div style="width: 100%; height: 400px; background: linear-gradient(135deg, var(--light-red), var(--pure-white)); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 4rem; color: var(--primary-red);">🎓</div>
+                </div>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-shield-alt"></i>
+        </div>
+    </section>
+
+    <!-- Result Portal Section -->
+    <section class="result-portal" id="results">
+        <div class="container">
+            <div class="portal-container">
+                <div class="portal-card animate-on-scroll">
+                    <h2>Check Your Results</h2>
+                    <p>Enter your credentials to access your academic results and certificates. Our secure portal ensures your data privacy and provides instant access to your academic records.</p>
+                    <button class="result-button" onclick="openResultPortal()">
+                        🔍 Check Results Now
+                    </button>
                 </div>
-                <h3>Secure Access</h3>
-                <p>Your results are protected with secure authentication to ensure privacy.</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-bolt"></i>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h2 class="animate-on-scroll">Get In Touch</h2>
+                    
+                    <div class="contact-item animate-on-scroll">
+                        <div class="contact-icon">📞</div>
+                        <div class="contact-details">
+                            <h3>Phone Number</h3>
+                            <p>+91 8876001303</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item animate-on-scroll">
+                        <div class="contact-icon">📍</div>
+                        <div class="contact-details">
+                            <h3>Address</h3>
+                            <p>Barpeta Road, Assam, India</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item animate-on-scroll">
+                        <div class="contact-icon">⏰</div>
+                        <div class="contact-details">
+                            <h3>Office Hours</h3>
+                            <p>Monday - Saturday: 9:00 AM - 6:00 PM</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item animate-on-scroll">
+                        <div class="contact-icon">📧</div>
+                        <div class="contact-details">
+                            <h3>Email</h3>
+                            <p>info@edumark.edu.in</p>
+                        </div>
+                    </div>
                 </div>
-                <h3>Instant Results</h3>
-                <p>Get your results instantly without any delays as soon as they're published.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-chart-line"></i>
+                
+                <div class="contact-form animate-on-scroll">
+                    <form onsubmit="handleFormSubmit(event)">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="4" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-button">Send Message</button>
+                    </form>
                 </div>
-                <h3>Performance Analysis</h3>
-                <p>Detailed analysis of your performance with subject-wise breakdown.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-print"></i>
-                </div>
-                <h3>Print Results</h3>
-                <p>Download or print your result for offline reference and record keeping.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-history"></i>
-                </div>
-                <h3>Previous Results</h3>
-                <p>Access your previous exam results for comparison and progress tracking.</p>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer id="contact">
-        <div class="footer-container">
-            <div class="footer-about">
-                <div class="footer-logo">
-                    <h2>EduMark</h2>
-                    <p>Your trusted partner for academic results and performance tracking.</p>
-                </div>
-            </div>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">EduMark</div>
+            <p>Empowering education through technology and innovation.</p>
+            
             <div class="footer-links">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#results">Results</a></li>
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                </ul>
+                <a href="#home">Home</a>
+                <a href="#features">Features</a>
+                <a href="#about">About</a>
+                <a href="#results">Results</a>
+                <a href="#contact">Contact</a>
             </div>
-            <div class="footer-contact">
-                <h3>Contact Us</h3>
-                <div class="contact-info">
-                    <p><i class="fas fa-map-marker-alt"></i> Barpeta Road, Assam, India</p>
-                    <p><i class="fas fa-phone"></i> +91 8876001303</p>
-                    <p><i class="fas fa-envelope"></i> info@edumark.com</p>
-                </div>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                </div>
+            
+            <div class="copyright">
+                <p>&copy; 2024 EduMark Private School. All rights reserved.</p>
             </div>
-        </div>
-        <div class="copyright">
-            <p>&copy; 2023 EduMark. All Rights Reserved.</p>
         </div>
     </footer>
 
+    <!-- Result Portal Modal -->
+    <div class="modal" id="resultModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">EduMark Result Portal</h3>
+                <button class="close-button" onclick="closeResultPortal()">&times;</button>
+            </div>
+            <iframe 
+                class="modal-iframe"
+                src="https://script.google.com/macros/s/AKfycbxIh5W1uKLfqZlYpYFwfC3seySvg4Dz7CkHre4KHTVs1UfF14yScQbwANuClwkGgY8VQA/exec"
+                allowfullscreen="true"
+                id="resultIframe">
+            </iframe>
+        </div>
+    </div>
+
     <script>
-        // Mobile Menu Toggle
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const mainNav = document.getElementById('mainNav');
-        
-        mobileMenuBtn.addEventListener('click', () => {
-            mainNav.classList.toggle('active');
-            const icon = mobileMenuBtn.querySelector('i');
-            if (mainNav.classList.contains('active')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
             } else {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
+                header.classList.remove('scrolled');
             }
         });
-        
-        // Smooth scrolling for anchor links
+
+        // Mobile menu toggle
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        mobileMenuToggle.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+        });
+
+        // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
+            anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
                     });
-                    
                     // Close mobile menu if open
-                    if (mainNav.classList.contains('active')) {
-                        mainNav.classList.remove('active');
-                        const icon = mobileMenuBtn.querySelector('i');
-                        icon.classList.remove('fa-times');
-                        icon.classList.add('fa-bars');
+                    navLinks.classList.remove('active');
+                }
+            });
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Result Portal Modal Functions
+        function openResultPortal() {
+            const modal = document.getElementById('resultModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Focus on iframe for better accessibility
+            setTimeout(() => {
+                document.getElementById('resultIframe').focus();
+            }, 300);
+        }
+
+        function closeResultPortal() {
+            const modal = document.getElementById('resultModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('resultModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeResultPortal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeResultPortal();
+            }
+        });
+
+        // Contact form submission
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(event.target);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const phone = formData.get('phone');
+            const message = formData.get('message');
+            
+            // Simple validation
+            if (!name || !email || !message) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+            
+            // Simulate form submission
+            alert('Thank you for your message! We will get back to you soon.');
+            event.target.reset();
+        }
+
+        // Add loading animation to result button
+        document.querySelector('.result-button').addEventListener('click', function() {
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 150);
+        });
+
+        // Add hover effects to feature cards
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+
+        // Add typewriter effect to hero title
+        function typeWriter(element, text, speed = 100) {
+            let i = 0;
+            element.innerHTML = '';
+            
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            
+            type();
+        }
+
+        // Initialize typewriter effect when page loads
+        window.addEventListener('load', function() {
+            const heroTitle = document.querySelector('.hero h1');
+            if (heroTitle) {
+                const originalText = heroTitle.textContent;
+                typeWriter(heroTitle, originalText, 150);
+            }
+        });
+
+        // Add counter animation for stats
+        function animateCounter(element, target, duration = 2000) {
+            let start = 0;
+            const increment = target / (duration / 16);
+            
+            function updateCounter() {
+                start += increment;
+                if (start < target) {
+                    element.textContent = Math.floor(start) + (element.textContent.includes('+') ? '+' : '') + (element.textContent.includes('%') ? '%' : '');
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    element.textContent = target + (element.textContent.includes('+') ? '+' : '') + (element.textContent.includes('%') ? '%' : '');
+                }
+            }
+            
+            updateCounter();
+        }
+
+        // Trigger counter animations when stats come into view
+        const statsObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const statNumber = entry.target.querySelector('.stat-number');
+                    if (statNumber && !statNumber.classList.contains('animated')) {
+                        statNumber.classList.add('animated');
+                        const text = statNumber.textContent;
+                        const number = parseInt(text.replace(/\D/g, ''));
+                        if (number) {
+                            animateCounter(statNumber, number);
+                        }
                     }
                 }
             });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.stat-item').forEach(stat => {
+            statsObserver.observe(stat);
         });
-        
-        // Form submission
-        const resultForm = document.getElementById('resultForm');
-        
-        resultForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const examType = document.getElementById('examType').value;
-            const studentClass = document.getElementById('class').value;
-            const rollNumber = document.getElementById('rollNumber').value;
-            
-            // Here you would typically send this data to a server
-            // For demonstration, we'll show an alert
-            alert(`Result request submitted for:\nExam: ${examType}\nClass: ${studentClass}\nRoll Number: ${rollNumber}`);
-            
-            // In a real implementation, you would redirect to the result page or show the result
-            // window.location.href = `result.html?exam=${examType}&class=${studentClass}&roll=${rollNumber}`;
-        });
-        
-        // Animation on scroll
-        function animateOnScroll() {
-            const elements = document.querySelectorAll('.feature-card, .result-container, .section-title');
-            
-            elements.forEach(element => {
-                const elementPosition = element.getBoundingClientRect().top;
-                const screenPosition = window.innerHeight / 1.3;
-                
-                if (elementPosition < screenPosition) {
-                    element.style.animation = 'fadeInUp 1s ease forwards';
-                }
-            });
-        }
-        
-        window.addEventListener('scroll', animateOnScroll);
-        // Initial check in case elements are already in view
-        animateOnScroll();
     </script>
 </body>
 </html>
+
